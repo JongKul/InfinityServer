@@ -36,6 +36,10 @@ http.createServer(function (req, res) {
 app.listen(port);
 app.use(express.logger());
 app.use(express.bodyParser());
+app.get('/', function(req, res,next) {
+	res.send("Hello World!");		
+})
+
 app.post('/login', function(req, res,next) {
 // handle to login
 	var id = req.body.id;
