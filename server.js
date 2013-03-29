@@ -41,10 +41,11 @@ app.get('/login', function(req, res) {
 	var id = req.body.id;
 	var nick = req.body.nick;
 	
+	var sendObj = { user_index : 1 };
 	
-			
+	res.send(sendObj);		
 })
-
+/*
 app.get('/friend_list', function(req, res) {
 // handle to get friend's list
 })
@@ -54,10 +55,10 @@ app.get('/game_info', function(req,res){
 
 })
 
-app.get('/turn)', function(req, res) {
+app.get('/turn', function(req, res) {
 	
 })
-
+*/
 
 
 
