@@ -2,7 +2,7 @@
 //  OpenShift sample Node application
 
 var express = require('express');
-var app = express();
+var app = module.exports = express();
 
 //Get the environment variables we need.
 var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
@@ -36,7 +36,7 @@ http.createServer(function (req, res) {
 app.listen(port);
 app.use(express.logger());
 app.use(express.bodyParser());
-app.get('/login', function(req, res) {
+app.post('/login', function(req, res,next) {
 // handle to login
 	var id = req.body.id;
 	var nick = req.body.nick;
