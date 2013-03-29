@@ -6,7 +6,7 @@ var app = module.exports = express();
 
 //Get the environment variables we need.
 var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-var port    = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var port    = process.env.OPENSHIFT_NODEJS_PORT || 9000;
 
 /*
 http.createServer(function (req, res) {
@@ -33,7 +33,7 @@ http.createServer(function (req, res) {
 */
 
 
-app.listen(port);
+
 app.use(express.logger());
 app.use(express.bodyParser());
 app.get('/', function(req, res,next) {
@@ -64,6 +64,5 @@ app.get('/turn', function(req, res) {
 })
 */
 
-
-
 console.log("Server running at http://" + ipaddr + ":" + port + "/");
+app.listen(port);
