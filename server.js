@@ -35,10 +35,30 @@ http.createServer(function (req, res) {
 
 app.listen(port);
 app.use(express.logger());
-app.get('/', function(req, res) {
-	var sendObj = { a : 1};
-	res.send(sendObj);
+app.use(express.bodyParser());
+app.get('/login', function(req, res) {
+// handle to login
+	var id = req.body.id;
+	var nick = req.body.nick;
+	
+	
+			
 })
+
+app.get('/friend_list', function(req, res) {
+// handle to get friend's list
+})
+
+app.get('/game_info', function(req,res){
+ //handle to create room and get room info
+
+})
+
+app.get('/turn)', function(req, res) {
+	
+})
+
+
 
 
 console.log("Server running at http://" + ipaddr + ":" + port + "/");
