@@ -121,5 +121,6 @@ app.post('/room_end', function(req, res,next) {
 
 
 console.log("Server running at http://" + ipaddr + ":" + port + "/");
+console.log("Server running at http://" + ipaddr + ":" + port + "/");
 
 app.listen(port, ipaddr);
