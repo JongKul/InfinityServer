@@ -2,6 +2,7 @@
 //  OpenShift sample Node application
 
 var express = require('express');
+var fs = require('fs');
 var app = module.exports = express();
 
 //Get the environment variables we need.
@@ -41,28 +42,78 @@ app.get('/', function(req, res,next) {
 })
 
 app.post('/login', function(req, res,next) {
-// handle to login
+
 	var id = req.body.id;
 	var nick = req.body.nick;
+	console.log('response ');
 	
 	var sendObj = { user_index : 1 };
-	
-	res.send(sendObj);		
+	res.send(sendObj);
+
 })
+
 /*
-app.get('/friend_list', function(req, res) {
-// handle to get friend's list
-})
+ input : {array : [1234,1234,123124,234234]}
 
-app.get('/game_info', function(req,res){
- //handle to create room and get room info
 
-})
+{
+   array : [{id : 123 , win : 1 , lose : 1, flag : true },
+ {id : 123 , win : 1 , lose : 1, flag : true} ,
+  {id : 123 , win : 1 , lose : 1, flag : true}] }*/
+//  클라이언트 친구리스트 전송하면  클라이언트에. login_flag , 승,패
+app.post('/sync_friend_list', function(req, res,next) {
 
-app.get('/turn', function(req, res) {
+	var id = req.body.id;
+	var nick = req.body.nick;
+	console.log('response ');
 	
+	var sendObj = { user_index : 1 };
+	res.send(sendObj);
 })
-*/
+
+
+
+//내턴 상대턴  parameter로 서버에 전송하면. 맞는걸 보내줌.
+app.post('/room_list', function(req, res,next) {
+
+	var id = req.body.id;
+	var nick = req.body.nick;
+	console.log('response ');
+	
+	var sendObj = { user_index : 1 };
+	res.send(sendObj);
+})
+
+
+// 방정보 가지고 오기  없으면  방을 만든다.
+app.post('/room_info', function(req, res,next) {
+
+	var id = req.body.id;
+	var nick = req.body.nick;
+	console.log('response ');
+	res.send(sendObj);
+})
+
+// 턴 진행 (게임) ->  응답은 game_info와 동일
+app.post('/turn', function(req, res,next) {
+
+	var id = req.body.id;
+	var nick = req.body.nick;
+	console.log('response ');
+	res.send(sendObj);
+})
+
+// 게임 종료확인 이후
+app.post('/room_end', function(req, res,next) {
+
+	var id = req.body.id;
+	var nick = req.body.nick;
+	console.log('response ');
+	res.send(sendObj);
+})
+
+
+
 console.log("Server running at http://" + ipaddr + ":" + port + "/");
 
 app.listen(port, ipaddr);
