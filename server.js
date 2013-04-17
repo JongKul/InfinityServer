@@ -63,12 +63,18 @@ app.post('/login', function(req, res,next) {
 //  클라이언트 친구리스트 전송하면  클라이언트에. login_flag , 승,패
 app.post('/sync_friend_list', function(req, res,next) {
 
-	var id = req.body.id;
-	var nick = req.body.nick;
-	console.log('response ');
+	req.body.array.foreach(function(info){
+		console.log(info.id);
+		info.win = 1
+		info.lose = 1
+		info.login_flag = true;
+		
+	});
 	
-	var sendObj = { user_index : 1 };
-	res.send(sendObj);
+	//console.log('response ');
+	
+	
+	res.send(req.body);
 })
 
 
