@@ -56,13 +56,14 @@ app.post('/login', function(req, res,next) {
  input : {array : [1234,1234,123124,234234]}
 
 
-{
-   array : [{id : 123 , win : 1 , lose : 1, flag : true },
+{ id : id
+   ,array : [{id : 123 , win : 1 , lose : 1, flag : true },
  {id : 123 , win : 1 , lose : 1, flag : true} ,
   {id : 123 , win : 1 , lose : 1, flag : true}] }*/
 //  클라이언트 친구리스트 전송하면  클라이언트에. login_flag , 승,패
 app.post('/sync_friend_list', function(req, res,next) {
 	console.log('정기호 개');
+	var id =  req.body.id;
 	req.body.array.forEach(function(info){
 		console.log(info.id);
 		info.win = 1
@@ -81,10 +82,14 @@ app.post('/sync_friend_list', function(req, res,next) {
 
 //내턴 상대턴  parameter로 서버에 전송하면. 맞는걸 보내줌.
 app.post('/room_list', function(req, res,next) {
-
 	var id = req.body.id;
-	var nick = req.body.nick;
-	console.log('response ');
+	
+	//turn : 1은 내턴 0은 상대방턴 
+	var result = {array :[	
+	{room_index : 1, id : 568652209 ,nick :"정기호개놈" ,turn : 1 }		
+	]};
+	
+	
 	
 	var sendObj = { user_index : 1 };
 	res.send(sendObj);
@@ -93,20 +98,68 @@ app.post('/room_list', function(req, res,next) {
 
 // 방정보 가지고 오기  없으면  방을 만든다.
 app.post('/room_info', function(req, res,next) {
-
-	var id = req.body.id;
-	var nick = req.body.nick;
+	var id = req.body.id;	
+	
+	var room_index = req.body.room_index;
+	//or	
+	var otherid = req.body.other_id;
+	
+	//data : 1은 백색 , 0는 흑색 , -1 없는거
+	//turn : 1은 내턴 0은 상대방턴 
+	var result = {
+		room_index : 1
+		,white  : id
+		,black : otherid  
+		,turn : 1  
+		,finish_flag : false
+		,winner : id //optional
+		,data : [
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1, 0, 1,-1,-1,-1]
+		[-1,-1,-1, 1, 0,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		]	
+	}
 	console.log('response ');
-	res.send(sendObj);
+	res.send(result);
 })
 
 // 턴 진행 (게임) ->  응답은 game_info와 동일
 app.post('/turn', function(req, res,next) {
 
-	var id = req.body.id;
-	var nick = req.body.nick;
+	var id = req.body.id;	
+	var room_index = req.body.room_index;
+	var x = req.body.x;
+	var y = req.body.y;	
+	
+	//data : 1은 백색 , 0는 흑색 , -1 없는거
+	//turn : 1은 내턴 0은 상대방턴 
+	var result = {
+		room_index : 1
+		,white  : id
+		,black : otherid  
+		,turn : 1  
+		,finish_flag : false
+		,winner : id //optional
+		,data : [
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1, 0, 1,-1,-1,-1]
+		[-1,-1,-1, 1, 0, 1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		[-1,-1,-1,-1,-1,-1,-1,-1]
+		]	
+	}
+	
+	
 	console.log('response ');
-	res.send(sendObj);
+	res.send(result);
 })
 
 // 게임 종료확인 이후
