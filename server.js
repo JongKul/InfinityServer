@@ -109,7 +109,7 @@ app.post('/room_info', function(req, res,next) {
 	var result = {
 		room_index : 1
 		,white  : id
-		,black : otherid  
+		,black : 568652209  
 		,turn : 1  
 		,finish_flag : false
 		,winner : id //optional
@@ -141,7 +141,7 @@ app.post('/turn', function(req, res,next) {
 	var result = {
 		room_index : 1
 		,white  : id
-		,black : otherid  
+		,black : 568652209  
 		,turn : 1  
 		,finish_flag : false
 		,winner : id //optional
