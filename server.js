@@ -86,7 +86,7 @@ app.post('/room_list', function(req, res,next) {
 	
 	//turn : 1은 내턴 0은 상대방턴 
 	var result = {array :[	
-	{room_index : 1, id : 568652209 ,nick :"정기호개놈" ,turn : 1 }		
+	{room_index : 1, id : "568652209" ,nick :"정기호개놈" ,turn : 1 }		
 	]};
 	
 	
@@ -109,7 +109,7 @@ app.post('/room_info', function(req, res,next) {
 	var result = {
 		room_index : 1
 		,white  : id
-		,black : 568652209  
+		,black : "568652209"  
 		,turn : 1  
 		,finish_flag : false
 		,winner : id //optional
@@ -141,7 +141,7 @@ app.post('/turn', function(req, res,next) {
 	var result = {
 		room_index : 1
 		,white  : id
-		,black : 568652209  
+		,black : "568652209"  
 		,turn : 1  
 		,finish_flag : false
 		,winner : id //optional
