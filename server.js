@@ -1,38 +1,34 @@
 #!/bin/env node
-//  OpenShift sample Node application
+
+
+
+
+var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+var port    = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var mysqlURL = process.env.OPENSHIFT_MYSQL_DB_URL || "mysql://adminx8aqD9X:UvG3tHLhH8sH@127.7.168.129:3306/infinity";
+
+
+
+
 
 var express = require('express');
 var fs = require('fs');
+var mysqlModule = require('./module/mysql_module');
 var app = module.exports = express();
 
-//Get the environment variables we need.
-var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-var port    = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
-/*
-http.createServer(function (req, res) {
-	var addr = "unknown";
-	var out = "";
-	if (req.headers.hasOwnProperty('x-forwarded-for')) {
-		addr = req.headers['x-forwarded-for'];
-	} else if (req.headers.hasOwnProperty('remote-addr')){
-		addr = req.headers['remote-addr'];
-	}
 
-	if (req.headers.hasOwnProperty('accept')) {
-		if (req.headers['accept'].toLowerCase() == "application/json") {
-			  res.writeHead(200, {'Content-Type': 'application/json'});
-			  res.end(JSON.stringify({'ip': addr}, null, 4) + "\n");			
-			  return ;
-		}
-	}
-	
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.write("Welcome to Node.js on OpenShift!\n\n");
-  res.end("Your IP address seems to be " + addr + "\n");
-}).listen(port, ipaddr);
-*/
 
+void startMysql(){
+	var db = new mysqlModule();
+	db.connect()
+}
+
+
+void startServer(){
+	console.log("Server running at http://" + ipaddr + ":" + port + "/");
+	app.listen(port, ipaddr);
+}
 
 
 app.use(express.logger());
@@ -54,8 +50,6 @@ app.post('/login', function(req, res,next) {
 
 /*
  input : {array : [1234,1234,123124,234234]}
-
-
 { id : id
    ,array : [{id : 123 , win : 1 , lose : 1, flag : true },
  {id : 123 , win : 1 , lose : 1, flag : true} ,
@@ -98,11 +92,9 @@ app.post('/room_list', function(req, res,next) {
 
 // 방정보 가지고 오기  없으면  방을 만든다.
 app.post('/room_info', function(req, res,next) {
-	var id = req.body.id;	
-	
-	var room_index = req.body.room_index;
-	//or	
+	var id = req.body.id;		
 	var otherid = req.body.other_id;
+	var room_index = req.body.room_index;
 	
 	//data : 1은 백색 , 0는 흑색 , -1 없는거
 	//turn : 1은 내턴 0은 상대방턴 
@@ -110,18 +102,18 @@ app.post('/room_info', function(req, res,next) {
 		room_index : 1
 		,white  : id
 		,black : "568652209"  
-		,turn : 1  
+		,turn : id  
 		,finish_flag : false
 		,winner : id //optional
 		,data : [
-		[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1, 0, 1,-1,-1,-1]
-		,[-1,-1,-1, 1, 0,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
+		-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1, 0, 1,-1,-1,-1
+		,-1,-1,-1, 1, 0,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
 		]	
 	}
 	console.log('response ');
@@ -132,6 +124,7 @@ app.post('/room_info', function(req, res,next) {
 app.post('/turn', function(req, res,next) {
 
 	var id = req.body.id;	
+	var otherid = req.body.other_id;
 	var room_index = req.body.room_index;
 	var x = req.body.x;
 	var y = req.body.y;	
@@ -142,18 +135,18 @@ app.post('/turn', function(req, res,next) {
 		room_index : 1
 		,white  : id
 		,black : "568652209"  
-		,turn : 1  
+		,turn : id  
 		,finish_flag : false
 		,winner : id //optional
 		,data : [
-		[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1, 0, 1,-1,-1,-1]
-		,[-1,-1,-1, 1, 0, 1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
-		,[-1,-1,-1,-1,-1,-1,-1,-1]
+		-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1, 0, 1,-1,-1,-1
+		,-1,-1,-1, 1, 0, 1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
+		,-1,-1,-1,-1,-1,-1,-1,-1
 		]	
 	}
 	
@@ -174,6 +167,4 @@ app.post('/room_end', function(req, res,next) {
 
 
 console.log("Server running at http://" + ipaddr + ":" + port + "/");
-console.log("Server running at http://" + ipaddr + ":" + port + "/");
 
-app.listen(port, ipaddr);
