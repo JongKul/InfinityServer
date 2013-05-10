@@ -1,12 +1,10 @@
-<<<<<<< HEAD
-#!/bin/env node
 
 
 
 
 var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port    = process.env.OPENSHIFT_NODEJS_PORT || 19999;
-var mysqlURL = process.env.OPENSHIFT_MYSQL_DB_URL || "mysql://adminx8aqD9X:UvG3tHLhH8sH@127.7.168.129:3306/infinity";
+var mysqlURL = process.env.OPENSHIFT_MYSQL_DB_URL || "mysql://adminx8aqD9X:UvG3tHLhH8sH@127.0.0.1:3306/infinity";
 
 
 var express = require('express');
@@ -15,6 +13,9 @@ var mysqlModule = require('./util/mysql_module');
 
 var app = module.exports = express();
 
+
+
+var constMysql = require('./const/mysql_query');
 var login = require('./game/login');
 var room_end = require('./game/room_end');
 var room_info = require('./game/room_info');
@@ -51,7 +52,7 @@ app.use(express.bodyParser());
 app.get('/', function(req, res,next) {
 	res.send("Hello World!");		
 })
-
+app.post('/login',login.process);
 
 
 startMysql();
