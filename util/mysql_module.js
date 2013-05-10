@@ -16,14 +16,10 @@ function MySqlModule() {
     EventEmitter.call(this);
 }
 
-MySqlModule.prototype.connect = function(host, port, id, password, database) {
-    this.dbClient = mysql.createConnection({
-        user: id
-        ,password : password
-        ,host :host
-        ,port :port
-        ,database: database
-    });
+MySqlModule.prototype.connect = function(url) {
+    this.dbClient = mysql.createConnection(
+       url
+    );
    // this.dbClient.connect();
     this.handleDisconnect(this.dbClient);
 };
