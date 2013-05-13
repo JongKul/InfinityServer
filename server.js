@@ -53,6 +53,7 @@ app.get('/', function(req, res,next) {
 	res.send("Hello World!");		
 })
 app.post('/login',login.process);
+app.post('/room_list',login.process);
 
 
 startMysql();

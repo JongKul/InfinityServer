@@ -10,8 +10,7 @@ module.exports.process = function(req, res,next) {
 	var id = req.body.id;
 	var nick = req.body.nick;
 	
-	app.db.query(constMysql.QUERY_LOGIN , [id, nick ], undefined , function(error, result, object) {
-	
+	app.db.query(constMysql.QUERY_LOGIN , [id, nick ], undefined , function(error, result, object) {	
 	
 		if(error != undefined) {
 			console.log("error")

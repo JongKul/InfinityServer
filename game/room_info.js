@@ -1,11 +1,9 @@
 var constMysql = require('../const/mysql_query');
-var express = require('express');
-var app = module.exports = express();
+var app = require('../server');
+
+module.exports.process = function(req, res,next) {
 
 
-
-// 방정보 가지고 오기  없으면  방을 만든다.
-app.post('/room_info', function(req, res,next) {
 	var id = req.body.id;		
 	var otherid = req.body.other_id;
 	var room_index = req.body.room_index;
