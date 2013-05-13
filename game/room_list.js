@@ -3,7 +3,7 @@ var app = require('../server');
 
 module.exports.process = function(req, res,next) {
 
-	var id = req.body.id;	
+	var id = req.body.user_id;	
 	
 	app.db.query(constMysql.QUERY_ROOM_LIST_SELECT , [id], undefined , function(error, result, object) {	
 	
@@ -22,4 +22,4 @@ module.exports.process = function(req, res,next) {
 	var sendObj = { user_index : 1 };
 	res.send(result);*/
 
-})
+};

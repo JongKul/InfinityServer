@@ -35,8 +35,7 @@ MySqlModule.prototype.query = function(sql, params, obj,cb)
 {
  	
    var self = this;
-    this.dbClient.query(sql,params,function(error, result) {
-     	console.log("query");
+    this.dbClient.query(sql,params,function(error, result) {     	
         if(error) {
             self.emit("error",error,sql, params ,obj);
             if(cb) {
