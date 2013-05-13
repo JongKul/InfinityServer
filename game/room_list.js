@@ -11,7 +11,7 @@ module.exports.process = function(req, res,next) {
 			console.log("error")
 			return;	
 		}
-		res.send(result);
+		res.send({array : result});
 	});
 	
 			//turn : 1은 내턴 0은 상대방턴 

@@ -25,12 +25,9 @@ module.exports.process = function(req, res,next) {
 			console.log("error")
 			return;	
 		}
-		var  resultJson = {
-			array: result
-			
-		};
+	
 		
-		res.send(resultJson);
+		res.send({array : result});
 	});
 	
 }
